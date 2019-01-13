@@ -6,6 +6,23 @@ export const Column = styled.div`
   align-items: center;
 `;
 
+export const Grid = styled.div`
+  display: grid;
+   grid-template-areas: "a";
+   grid-gap: 10px;
+   @media (min-width: 780px)  {
+    grid-template-areas: "a a a a";
+  }
+`;
+
+export const GridItem = styled.div`
+  grid-column-start: auto;
+  grid-column-end: auto;
+  
+  grid-row-start: auto
+  grid-row-end: auto
+`;
+
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -25,4 +42,18 @@ export const Row = styled.div`
       order: 1;
     }
   }
+`;
+
+export const Button = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: ${props => (props.primary ? 'palevioletred' : 'white')};
+  color: ${props => (props.primary ? 'white' : 'palevioletred')};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+  width: 100%
+  height: 100%;
 `;

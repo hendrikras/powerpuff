@@ -13,7 +13,7 @@ const navigateDetails = (id, fetch, changePage) => {
 };
 
 const Main = ({
-  isFetching, fetchShow: fetch, changePage, ids,
+  fetchShow: fetch, changePage, ids,
 }) => (
   <div>
     <h1>Series</h1>
@@ -21,7 +21,7 @@ const Main = ({
     <Row>
       { ids.map(id => (
         <Column key={id}>
-          <button type="button" disabled={isFetching} onClick={() => navigateDetails(id, fetch, changePage)}>
+          <button type="button" onClick={() => navigateDetails(id, fetch, changePage)}>
             {id}
           </button>
         </Column>
@@ -33,17 +33,11 @@ const Main = ({
 
 Main.propTypes = {
   ids: PropTypes.arrayOf(PropTypes.number).isRequired,
-  isFetching: PropTypes.bool.isRequired,
   changePage: PropTypes.func.isRequired,
   fetchShow: PropTypes.func.isRequired,
-  show: PropTypes.object.isRequired, // eslint-disable-line
 };
 
-const mapStateToProps = ({ series }) => ({
-  show: series.show,
-  ids: series.ids,
-  isFetching: series.isFetching,
-});
+const mapStateToProps = ({ series }) => series;
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchShow,

@@ -1,8 +1,11 @@
 export const SHOW_REQUESTED = 'SHOW_REQUESTED';
+export const EPISODES_REQUESTED = 'EPISODES_REQUESTED';
 export const SHOW = 'SHOW';
+export const EPISODELIST = 'EPISODELIST';
 
 const initialState = {
-  show: { summary: 'pending' },
+  show: {},
+  episodeList: [],
   ids: [6771, 4898, 27896],
   isFetching: false,
 };
@@ -13,13 +16,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
+        episodeList: [],
       };
-
     case SHOW:
       return {
         ...state,
         show: action.result,
-        isFetching: !state.isFetching,
+        isFetching: false,
+      };
+    case EPISODELIST:
+      return {
+        ...state,
+        episodeList: action.result,
+        isFetching: false,
       };
 
     default:
@@ -27,32 +36,21 @@ export default (state = initialState, action) => {
   }
 };
 
-export const fetchShow = id => (dispatch) => {
+const getData = (id, episodes) => (dispatch) => {
   dispatch({
     type: SHOW_REQUESTED,
   });
-
-  fetch('http://api.tvmaze.com/shows/'.concat(id))
+  const url = `http://api.tvmaze.com/shows/${id}`;
+  const type = episodes ? EPISODELIST : SHOW;
+  fetch(episodes ? url.concat('/episodes') : url)
     .then(response => response.json())
     .then((result) => {
       dispatch({
-        type: SHOW,
+        type,
         result,
       });
     });
 };
 
-export const fetchEpisodes = () => (dispatch) => {
-  dispatch({
-    type: SHOW_REQUESTED,
-  });
-
-  fetch('http://api.tvmaze.com/shows/6771')
-    .then(response => response.json())
-    .then((result) => {
-      dispatch({
-        type: SHOW,
-        result,
-      });
-    });
-};
+export const fetchShow = id => getData(id, false);
+export const fetchEpisodes = id => getData(id, true);
