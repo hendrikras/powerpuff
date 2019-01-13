@@ -1,9 +1,48 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+export const LinkElement = styled(Link)`
+background-color: palevioletred;
+border: 1px solid #93291b;
+border-radius: 3px 3px 3px 3px;
+box-shadow: 0 0 1px #93291b inset;
+color: white;
+padding: 5px;
+`;
+
+export const Heading = styled.h1`
+font-family: 'Enriqueta', arial, serif;
+line-height: 1.25; margin: 0 0 10px;
+font-size: 40px;
+font-weight: bold;
+@media (min-width: 320px) and (max-width: 780px) {
+  font-size: 30px;
+}
+`;
+
+
+export const Paragraph = styled.span`
+color: #333333;
+font-family: "Helvetica Neue",Arial,sans-serif;
+font-size: 16px;
+font-weight: 300;
+line-height: 1.5625;
+margin-bottom: 15px
+
+ @media (min-width: 320px) and (max-width: 780px) {
+ font-size: 13px;
+  font-weight: 200;
+ }
+`;
 
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const Image = styled.img`
+  margin: 15px;
 `;
 
 export const Grid = styled.div`

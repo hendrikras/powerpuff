@@ -1,15 +1,14 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Main from './views/Main';
 import Episodes from './views/Episodes';
 import Details from './views/Details';
-
+import { LinkElement } from './styled';
 
 const App = () => (
   <div>
     <header>
-      <Link to="/">Series</Link>
-      <Link to="/details">Details</Link>
+      <LinkElement to="/">Series</LinkElement>
     </header>
 
     <main>

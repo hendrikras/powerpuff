@@ -5,7 +5,7 @@ import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchShow } from '../stores/modules/series';
-import { Column, Row } from '../styled';
+import { Button, Column, Row, Heading, Grid, GridItem } from '../styled';
 
 const navigateDetails = (id, fetch, changePage) => {
   fetch(id);
@@ -15,19 +15,22 @@ const navigateDetails = (id, fetch, changePage) => {
 const Main = ({
   fetchShow: fetch, changePage, ids,
 }) => (
-  <div>
-    <h1>Series</h1>
-
-    <Row>
-      { ids.map(id => (
-        <Column key={id}>
-          <button type="button" onClick={() => navigateDetails(id, fetch, changePage)}>
-            {id}
-          </button>
-        </Column>
-      ))}
-    </Row>
-  </div>
+  <Row>
+    <Column>
+      <Heading>Series</Heading>
+    </Column>
+    <Column>
+      <Grid>
+        { ids.map(id => (
+          <GridItem key={id}>
+            <Button primary type="button" onClick={() => navigateDetails(id, fetch, changePage)}>
+              {id}
+            </Button>
+          </GridItem>
+        ))}
+      </Grid>
+    </Column>
+  </Row>
 );
 
 

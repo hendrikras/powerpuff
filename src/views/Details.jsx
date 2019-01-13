@@ -6,7 +6,9 @@ import ReactHtmlParser from 'react-html-parser';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchEpisodes } from '../stores/modules/series';
-import { Button, Grid, GridItem } from '../styled';
+import {
+  Button, Grid, GridItem, Image, Row, Column, Heading, Paragraph,
+} from '../styled';
 
 const Details = ({
   show: {
@@ -14,32 +16,41 @@ const Details = ({
     name,
     summary = 'pending',
     image: {
-      medium = 'http://www.hutterites.org/wp-content/uploads/2012/03/placeholder.jpg',
+      medium = 'http://placehold.it/210x295',
     } = {},
   },
-  episodeList,
+  episodeList = [],
   fetchEpisodes: fetch,
 }) => (
   <>
-    <div>
-      <img alt="cover" src={medium} />
-      <h1>
-        { name }
-      </h1>
-      { ReactHtmlParser(summary) }
-    </div>
-    <Grid>
-      { episodeList.map(episode => (
-        <GridItem key={episode.id}>
-          <Button primary>{ episode.name }</Button>
-        </GridItem>
-      ))}
-    </Grid>
-    {
+    <Row>
+      <Column>
+        <Image alt="cover" src={medium} />
+      </Column>
+      <Column>
+        <Heading>
+          { name }
+        </Heading>
+        <Paragraph>
+          { ReactHtmlParser(summary) }
+        </Paragraph>
+      </Column>
+    </Row>
+    <Row>
+      <Column>
+        <Grid>
+          {episodeList.length > 0 && episodeList.map(episode => (
+            <GridItem key={episode.id}>
+              <Button primary>{ episode.name }</Button>
+            </GridItem>
+          ))}
+        </Grid>
+        {
       episodeList.length === 0
     && (<Button onClick={() => fetch(id)}>Show episodes</Button>)
     }
-
+      </Column>
+    </Row>
   </>
 );
 
