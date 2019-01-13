@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactHtmlParser from 'react-html-parser';
+
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -10,7 +12,7 @@ const Details = ({ show }) => (
     <h1>
       { show.name }
     </h1>
-    { show.summary }
+    { ReactHtmlParser(show.summary) }
   </div>
 );
 
