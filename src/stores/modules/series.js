@@ -7,6 +7,7 @@ const initialState = {
   show: {},
   episodeList: [],
   ids: [6771, 4898, 27896],
+  names: { 6771: 'PowerPuff Girls', 4898: 'Kenny StarFighter', 27896: 'Yorkshire wolds' },
   isFetching: false,
 };
 

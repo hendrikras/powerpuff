@@ -21,6 +21,19 @@ font-weight: bold;
 `;
 
 
+export const CardHeading = styled.h2`
+font-family: 'Enriqueta', arial, serif;
+line-height: 1.25; margin: 0 0 10px;
+font-size: 25px;
+font-weight: bold;
+@media (min-width: 320px) and (max-width: 780px) {
+  font-size: 14px;
+  line-height: 1.25; margin: 0 0 0;
+
+}
+`;
+
+
 export const Paragraph = styled.span`
 color: #333333;
 font-family: "Helvetica Neue",Arial,sans-serif;
@@ -50,7 +63,7 @@ export const Grid = styled.div`
    grid-template-areas: "a";
    grid-gap: 10px;
    @media (min-width: 780px)  {
-    grid-template-areas: "a a a a";
+    grid-template-areas: "a a a";
   }
 `;
 
@@ -84,7 +97,6 @@ export const Row = styled.div`
 `;
 
 export const Button = styled.button`
-  /* Adapt the colors based on primary prop */
   background: ${props => (props.primary ? 'palevioletred' : 'white')};
   color: ${props => (props.primary ? 'white' : 'palevioletred')};
 
@@ -95,4 +107,5 @@ export const Button = styled.button`
   border-radius: 3px;
   width: 100%
   height: 100%;
+  cursor: pointer;
 `;

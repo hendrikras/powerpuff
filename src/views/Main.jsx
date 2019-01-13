@@ -5,7 +5,9 @@ import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchShow } from '../stores/modules/series';
-import { Button, Column, Row, Heading, Grid, GridItem } from '../styled';
+import {
+  Button, Column, Row, Heading, Grid, GridItem,
+} from '../styled';
 
 const navigateDetails = (id, fetch, changePage) => {
   fetch(id);
@@ -13,7 +15,7 @@ const navigateDetails = (id, fetch, changePage) => {
 };
 
 const Main = ({
-  fetchShow: fetch, changePage, ids,
+  fetchShow: fetch, changePage, ids, names,
 }) => (
   <Row>
     <Column>
@@ -23,8 +25,8 @@ const Main = ({
       <Grid>
         { ids.map(id => (
           <GridItem key={id}>
-            <Button primary type="button" onClick={() => navigateDetails(id, fetch, changePage)}>
-              {id}
+            <Button type="button" onClick={() => navigateDetails(id, fetch, changePage)}>
+              {names[id]}
             </Button>
           </GridItem>
         ))}
@@ -36,6 +38,7 @@ const Main = ({
 
 Main.propTypes = {
   ids: PropTypes.arrayOf(PropTypes.number).isRequired,
+  names: PropTypes.shape().isRequired,
   changePage: PropTypes.func.isRequired,
   fetchShow: PropTypes.func.isRequired,
 };

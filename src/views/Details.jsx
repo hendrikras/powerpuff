@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchEpisodes } from '../stores/modules/series';
 import {
-  Button, Grid, GridItem, Image, Row, Column, Heading, Paragraph,
+  Button, CardHeading, Grid, GridItem, Image, Row, Column, Heading, Paragraph,
 } from '../styled';
 
 const Details = ({
@@ -41,13 +41,17 @@ const Details = ({
         <Grid>
           {episodeList.length > 0 && episodeList.map(episode => (
             <GridItem key={episode.id}>
-              <Button primary>{ episode.name }</Button>
+              <Button>
+                {episode.image && episode.image.medium && <Image src={episode.image.medium} /> }
+                <CardHeading>{ episode.name }</CardHeading>
+                <div>{ ReactHtmlParser(episode.summary) }</div>
+              </Button>
             </GridItem>
           ))}
         </Grid>
         {
       episodeList.length === 0
-    && (<Button onClick={() => fetch(id)}>Show episodes</Button>)
+    && (<Button primary onClick={() => fetch(id)}>Show episodes</Button>)
     }
       </Column>
     </Row>
