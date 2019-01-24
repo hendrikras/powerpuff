@@ -5,15 +5,10 @@ import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchShow, fetchShows } from '../stores/modules/series';
+import { fetchShows } from '../stores/modules/series';
 import {
   Button, Column, Row, Heading, Grid, GridItem,
 } from '../styled';
-
-const navigateDetails = (id, fetch, changePage) => {
-  fetch(id);
-  changePage();
-};
 
 class Main extends Component {
   componentDidMount() {
@@ -23,7 +18,7 @@ class Main extends Component {
 
   render() {
     const {
-      fetchShow: fetch, changePage, shows, error,
+      changePage, shows, error,
     } = this.props;
     return (
       <>
@@ -35,7 +30,7 @@ class Main extends Component {
                 <Grid>
                   {shows.map(({ show: { id, name } }) => (
                     <GridItem key={id}>
-                      <Button type="button" onClick={() => navigateDetails(id, fetch, changePage)}>
+                      <Button type="button" onClick={() => changePage(id)}>
                         {name}
                       </Button>
                     </GridItem>
@@ -61,16 +56,14 @@ Main.propTypes = {
     show: PropTypes.object,
   })).isRequired,
   changePage: PropTypes.func.isRequired,
-  fetchShow: PropTypes.func.isRequired,
   fetchShows: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ series }) => series;
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchShow,
   fetchShows,
-  changePage: () => push('/details'),
+  changePage: id => push(`/details/${id}`),
 }, dispatch);
 
 export default connect(

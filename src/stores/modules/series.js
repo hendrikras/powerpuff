@@ -1,22 +1,13 @@
-export const SHOW_REQUESTED = 'SHOW_REQUESTED';
-export const SHOW = 'SHOW';
-export const EPISODELIST = 'EPISODELIST';
+export const FETCH_SHOW_BEGIN = 'FETCH_SHOW_BEGIN';
+export const FETCH_SHOW_SUCCESS = 'FETCH_SHOW_SUCCESS';
+export const FETCH_EPISODE_SUCCESS = 'FETCH_EPISODE_SUCCESS';
 
 export const FETCH_SHOWS_BEGIN = 'FETCH_SHOWS_BEGIN';
 export const FETCH_SHOWS_SUCCESS = 'FETCH_SHOWS_SUCCESS';
-export const FETCH_SHOWS_FAILURE = 'FETCH_SHOWS_FAILURE';
-
-export const fetchShowsBegin = () => ({
-  type: FETCH_SHOWS_BEGIN,
-});
-
-export const fetchShowsSuccess = shows => ({
-  type: FETCH_SHOWS_SUCCESS,
-  payload: { shows },
-});
+export const FETCH_FAILURE = 'FETCH_FAILURE';
 
 export const fetchShowsFailure = error => ({
-  type: FETCH_SHOWS_FAILURE,
+  type: FETCH_FAILURE,
   payload: { error },
 });
 
@@ -44,26 +35,26 @@ export default (state = initialState, action) => {
         shows: action.result,
       };
 
-    case FETCH_SHOWS_FAILURE:
+    case FETCH_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
         items: [],
       };
-    case SHOW_REQUESTED:
+    case FETCH_SHOW_BEGIN:
       return {
         ...state,
         isFetching: true,
         episodeList: [],
       };
-    case SHOW:
+    case FETCH_SHOW_SUCCESS:
       return {
         ...state,
         show: action.result,
         isFetching: false,
       };
-    case EPISODELIST:
+    case FETCH_EPISODE_SUCCESS:
       return {
         ...state,
         episodeList: action.result,
@@ -81,12 +72,12 @@ const throwError = (response) => {
 
 const getData = (type, id) => (dispatch) => {
   dispatch({
-    type: SHOW_REQUESTED,
+    type: FETCH_SHOW_BEGIN,
   });
   const base = 'http://api.tvmaze.com';
   const search = id ? `shows/${id}` : '/search/shows?q=girls';
   const url = `${base}/${search}`;
-  fetch(type === EPISODELIST ? url.concat('/episodes') : url)
+  fetch(type === FETCH_EPISODE_SUCCESS ? url.concat('/episodes') : url)
     .then(response => (response.ok ? response : throwError(response)))
     .then(response => response.json())
     .then((result) => {
@@ -99,5 +90,5 @@ const getData = (type, id) => (dispatch) => {
 };
 
 export const fetchShows = () => getData(FETCH_SHOWS_SUCCESS);
-export const fetchShow = id => getData(SHOW, id);
-export const fetchEpisodes = id => getData(EPISODELIST, id);
+export const fetchShow = id => getData(FETCH_SHOW_SUCCESS, id);
+export const fetchEpisodes = id => getData(FETCH_EPISODE_SUCCESS, id);
