@@ -89,6 +89,10 @@ const getData = (type, id) => (dispatch) => {
     .catch(error => dispatch(fetchShowsFailure(error)));
 };
 
+export const setShow = result => (dispatch) => {
+  dispatch({ type: FETCH_SHOW_SUCCESS, result });
+};
+
 export const fetchShows = () => getData(FETCH_SHOWS_SUCCESS);
 export const fetchShow = id => getData(FETCH_SHOW_SUCCESS, id);
 export const fetchEpisodes = id => getData(FETCH_EPISODE_SUCCESS, id);

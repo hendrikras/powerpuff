@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 
-import showMessage from './Helpers';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchEpisodes, fetchShow } from '../stores/modules/series';
+import showMessage from './Helpers';
+import { fetchEpisodes, fetchShow, setShow } from '../stores/modules/series';
 import Tile from './Tile';
 import {
   Button, Grid, Image, Row, Column, Heading, Paragraph,
@@ -13,8 +13,18 @@ import {
 
 class Details extends Component {
   componentDidMount() {
-    const { fetchShow: getShow, match: { params: { id } } } = this.props;
-    getShow(id);
+    const {
+      setShow: useShow,
+      fetchShow: getShow,
+      match: { params: { id } },
+      shows,
+    } = this.props;
+    const found = shows.find(({ show: { id: idx } }) => idx === Number.parseInt(id, 10));
+    if (found) {
+      useShow(found.show);
+    } else {
+      getShow(id);
+    }
   }
 
   render() {
@@ -73,8 +83,10 @@ Details.propTypes = {
   error: PropTypes.shape({
     body: PropTypes.object,
   }),
+  setShow: PropTypes.func.isRequired,
   fetchShow: PropTypes.func.isRequired,
   match: PropTypes.shape().isRequired,
+  shows: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   show: PropTypes.shape({
     show: PropTypes.shape({
       id: PropTypes.string,
@@ -96,6 +108,7 @@ Details.propTypes = {
 const mapStateToProps = ({ series }) => series;
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  setShow,
   fetchShow,
   fetchEpisodes,
 }, dispatch);

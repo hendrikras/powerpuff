@@ -36,14 +36,8 @@ it('should handle FETCH_SHOW_BEGIN', () => {
   expect(
     reducer({}, {
       type: FETCH_SHOW_BEGIN,
-    }),
-  ).toEqual(
-    {
-      series: {
-        episodeList: [], error: null, isFetching: true, show: {}, shows: [],
-      },
-    },
-  );
+    }).series.isFetching,
+  ).toEqual(true);
 });
 
 it('should update show for type FETCH_SHOW_SUCCESS', () => {
@@ -51,12 +45,6 @@ it('should update show for type FETCH_SHOW_SUCCESS', () => {
     reducer({}, {
       type: FETCH_SHOW_SUCCESS,
       result: 'test',
-    }),
-  ).toEqual(
-    {
-      series: {
-        episodeList: [], error: null, isFetching: false, show: 'test', shows: [],
-      },
-    },
-  );
+    }).series.show,
+  ).toEqual('test');
 });
