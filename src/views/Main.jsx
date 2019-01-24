@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Tile from './Tile';
 import { fetchShows } from '../stores/modules/series';
 import {
-  Button, Column, Row, Heading, Grid, GridItem,
+  Column, Row, Heading, Grid,
 } from '../styled';
 
 class Main extends Component {
@@ -28,12 +28,12 @@ class Main extends Component {
             <Row>
               <Column>
                 <Grid>
-                  {shows.map(({ show: { id, name } }) => (
-                    <GridItem key={id}>
-                      <Button type="button" onClick={() => changePage(id)}>
-                        {name}
-                      </Button>
-                    </GridItem>
+                  {shows.map(({ show }) => (
+                    <Tile
+                      key={show.id}
+                      item={show}
+                      onClick={() => changePage(show.id)}
+                    />
                   ))}
                 </Grid>
               </Column>

@@ -6,8 +6,9 @@ import ReactHtmlParser from 'react-html-parser';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchEpisodes, fetchShow } from '../stores/modules/series';
+import Tile from './Tile';
 import {
-  Button, CardHeading, Grid, GridItem, Image, Row, Column, Heading, Paragraph,
+  Button, Grid, Image, Row, Column, Heading, Paragraph,
 } from '../styled';
 
 class Details extends Component {
@@ -48,15 +49,7 @@ class Details extends Component {
         <Row>
           <Column>
             <Grid>
-              {episodeList.length > 0 && episodeList.map(episode => (
-                <GridItem key={episode.id}>
-                  <Button>
-                    {episode.image && episode.image.medium && <Image src={episode.image.medium} /> }
-                    <CardHeading>{ episode.name }</CardHeading>
-                    <div>{ ReactHtmlParser(episode.summary) }</div>
-                  </Button>
-                </GridItem>
-              ))}
+              { episodeList.map(episode => (<Tile item={episode} showSummary key={episode.id} />)) }
             </Grid>
             {
       episodeList.length === 0
