@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Tile from './Tile';
 import { fetchShows } from '../stores/modules/series';
+import showMessage from './Helpers';
 import {
   Column, Row, Heading, Grid,
 } from '../styled';
@@ -18,27 +19,25 @@ class Main extends Component {
 
   render() {
     const {
-      changePage, shows, error,
+      changePage, shows, error, isFetching,
     } = this.props;
-    return (
+
+    return showMessage(isFetching, error) || (
       <>
         <Heading>Series</Heading>
-        { error ? (<h2>{error.toString()}</h2>)
-          : (
-            <Row>
-              <Column>
-                <Grid>
-                  {shows.map(({ show }) => (
-                    <Tile
-                      key={show.id}
-                      item={show}
-                      onClick={() => changePage(show.id)}
-                    />
-                  ))}
-                </Grid>
-              </Column>
-            </Row>
-          )}
+        <Row>
+          <Column>
+            <Grid>
+              {shows.map(({ show }) => (
+                <Tile
+                  key={show.id}
+                  item={show}
+                  onClick={() => changePage(show.id)}
+                />
+              ))}
+            </Grid>
+          </Column>
+        </Row>
       </>
     );
   }
@@ -49,6 +48,7 @@ Main.defaultProps = {
 };
 
 Main.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
   error: PropTypes.shape({
     body: PropTypes.object,
   }),

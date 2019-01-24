@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 
-
+import showMessage from './Helpers';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchEpisodes, fetchShow } from '../stores/modules/series';
@@ -19,6 +19,8 @@ class Details extends Component {
 
   render() {
     const {
+      isFetching,
+      error,
       show: {
         id,
         name,
@@ -31,7 +33,7 @@ class Details extends Component {
       fetchEpisodes: fetch,
     } = this.props;
 
-    return (
+    return showMessage(isFetching, error) || (
       <>
         <Row>
           <Column>
@@ -62,8 +64,15 @@ class Details extends Component {
   }
 }
 
+Details.defaultProps = {
+  error: null,
+};
 
 Details.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.shape({
+    body: PropTypes.object,
+  }),
   fetchShow: PropTypes.func.isRequired,
   match: PropTypes.shape().isRequired,
   show: PropTypes.shape({
