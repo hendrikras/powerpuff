@@ -5,7 +5,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import showMessage from './Helpers';
-import { fetchEpisodes, fetchShow, setShow } from '../stores/modules/series';
+import { fetchEpisodes, fetchShow } from '../stores/modules/series';
 import Tile from './Tile';
 import {
   Button, Grid, Image, Row, Column, Heading, Paragraph,
@@ -14,15 +14,11 @@ import {
 class Details extends Component {
   componentDidMount() {
     const {
-      setShow: useShow,
       fetchShow: getShow,
       match: { params: { id } },
       shows,
     } = this.props;
-    const found = shows.find(({ show: { id: idx } }) => idx === Number.parseInt(id, 10));
-    if (found) {
-      useShow(found.show);
-    } else {
+    if (!shows[id]) {
       getShow(id);
     }
   }
@@ -31,46 +27,52 @@ class Details extends Component {
     const {
       isFetching,
       error,
-      show: {
+      shows,
+      match,
+      episodeList = [],
+      fetchEpisodes: fetch,
+    } = this.props;
+    const { params: { id: idx } } = match;
+    if (shows[idx]) {
+      const {
         id,
         name,
         summary = 'pending',
         image: {
           medium = 'http://placehold.it/210x295',
         } = {},
-      },
-      episodeList = [],
-      fetchEpisodes: fetch,
-    } = this.props;
+      } = shows[idx].show;
 
-    return showMessage(isFetching, error) || (
-      <>
-        <Row>
-          <Column>
-            <Image alt="cover" src={medium} />
-          </Column>
-          <Column>
-            <Heading>
-              { name }
-            </Heading>
-            <Paragraph>
-              { ReactHtmlParser(summary) }
-            </Paragraph>
-          </Column>
-        </Row>
-        <Row>
-          <Column>
-            <Grid>
-              { episodeList.map(episode => (<Tile item={episode} showSummary key={episode.id} />)) }
-            </Grid>
-            {
-      episodeList.length === 0
-    && (<Button primary onClick={() => fetch(id)}>Show episodes</Button>)
+      return showMessage(isFetching, error) || (
+        <>
+          <Row>
+            <Column>
+              <Image alt="cover" src={medium} />
+            </Column>
+            <Column>
+              <Heading>
+                {name}
+              </Heading>
+              <Paragraph>
+                {ReactHtmlParser(summary)}
+              </Paragraph>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Grid>
+                {episodeList.map(episode => (<Tile item={episode} showSummary key={episode.id} />))}
+              </Grid>
+              {
+                episodeList.length === 0
+                && (<Button primary onClick={() => fetch(id)}>Show episodes</Button>)
+              }
+            </Column>
+          </Row>
+        </>
+      );
     }
-          </Column>
-        </Row>
-      </>
-    );
+    return <div>loading</div>;
   }
 }
 
@@ -83,11 +85,9 @@ Details.propTypes = {
   error: PropTypes.shape({
     body: PropTypes.object,
   }),
-  setShow: PropTypes.func.isRequired,
   fetchShow: PropTypes.func.isRequired,
   match: PropTypes.shape().isRequired,
-  shows: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  show: PropTypes.shape({
+  shows: PropTypes.shape({
     show: PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
@@ -108,7 +108,6 @@ Details.propTypes = {
 const mapStateToProps = ({ series }) => series;
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setShow,
   fetchShow,
   fetchEpisodes,
 }, dispatch);

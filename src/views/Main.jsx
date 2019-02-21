@@ -28,7 +28,7 @@ class Main extends Component {
         <Row>
           <Column>
             <Grid>
-              {shows.map(({ show }) => (
+              {Object.values(shows).map(({ show }) => (
                 <Tile
                   key={show.id}
                   item={show}
@@ -52,9 +52,14 @@ Main.propTypes = {
   error: PropTypes.shape({
     body: PropTypes.object,
   }),
-  shows: PropTypes.arrayOf(PropTypes.shape({
-    show: PropTypes.object,
-  })).isRequired,
+  shows: PropTypes.shape({
+    show: PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      summary: PropTypes.string,
+      image: PropTypes.object,
+    }),
+  }).isRequired,
   changePage: PropTypes.func.isRequired,
   fetchShows: PropTypes.func.isRequired,
 };

@@ -11,10 +11,14 @@ export const fetchShowsFailure = error => ({
   payload: { error },
 });
 
+const arrayToObject = array => array.reduce((serie, item) => {
+  serie[item.show.id] = item; //eslint-disable-line
+  return serie;
+}, {});
+
 const initialState = {
   error: null,
-  show: {},
-  shows: [],
+  shows: {},
   episodeList: [],
   isFetching: false,
 };
@@ -32,7 +36,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        shows: action.result,
+        shows: arrayToObject(action.result),
       };
 
     case FETCH_FAILURE:
@@ -51,7 +55,7 @@ export default (state = initialState, action) => {
     case FETCH_SHOW_SUCCESS:
       return {
         ...state,
-        show: action.result,
+        shows: { [action.result.id]: { show: action.result } },
         isFetching: false,
       };
     case FETCH_EPISODE_SUCCESS:
