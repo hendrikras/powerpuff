@@ -29,7 +29,7 @@ class Details extends Component {
       error,
       shows,
       match,
-      episodeList = [],
+      episodeList = {},
       fetchEpisodes: fetch,
     } = this.props;
     const { params: { id: idx } } = match;
@@ -60,12 +60,13 @@ class Details extends Component {
           </Row>
           <Row>
             <Column>
-              <Grid>
-                {episodeList.map(episode => (<Tile item={episode} showSummary key={episode.id} />))}
-              </Grid>
               {
-                episodeList.length === 0
-                && (<Button primary onClick={() => fetch(id)}>Show episodes</Button>)
+                episodeList[idx] ? (
+                  <Grid>
+                    {episodeList[idx]
+                      .map(episode => (<Tile item={episode} showSummary key={episode.id} />))}
+                  </Grid>
+                ) : (<Button primary onClick={() => fetch(id)}>Show episodes</Button>)
               }
             </Column>
           </Row>
@@ -95,13 +96,15 @@ Details.propTypes = {
       image: PropTypes.object,
     }),
   }).isRequired,
-  episodeList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      image: PropTypes.object,
-    }),
-  ).isRequired,
+  episodeList: PropTypes.shape({
+    id: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        image: PropTypes.object,
+      }),
+    ),
+  }).isRequired,
   fetchEpisodes: PropTypes.func.isRequired,
 };
 

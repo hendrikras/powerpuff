@@ -19,11 +19,12 @@ const arrayToObject = array => array.reduce((serie, item) => {
 const initialState = {
   error: null,
   shows: {},
-  episodeList: [],
+  episodeList: {},
   isFetching: false,
 };
 
 export default (state = initialState, action) => {
+  const { id, result, error } = action;
   switch (action.type) {
     case FETCH_SHOWS_BEGIN:
       return {
@@ -36,32 +37,31 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        shows: arrayToObject(action.result),
+        shows: arrayToObject(result),
       };
 
     case FETCH_FAILURE:
       return {
         ...state,
         loading: false,
-        error: action.payload.error,
+        error,
         items: [],
       };
     case FETCH_SHOW_BEGIN:
       return {
         ...state,
         isFetching: true,
-        episodeList: [],
       };
     case FETCH_SHOW_SUCCESS:
       return {
         ...state,
-        shows: { [action.result.id]: { show: action.result } },
+        shows: { [id]: { show: result } },
         isFetching: false,
       };
     case FETCH_EPISODE_SUCCESS:
       return {
         ...state,
-        episodeList: action.result,
+        episodeList: { [id]: result },
         isFetching: false,
       };
 
@@ -86,6 +86,7 @@ const getData = (type, id) => (dispatch) => {
     .then(response => response.json())
     .then((result) => {
       dispatch({
+        id,
         type,
         result,
       });
