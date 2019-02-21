@@ -18,15 +18,15 @@ it('renders without crashing', () => {
 
 it('should return an error message ', () => {
   expect(testMessage()).toEqual(false);
-  expect(testMessage(true, false)).toEqual( <h2>loading..</h2>);
-  expect(testMessage(false, 'error')).toEqual( <h2>error</h2>);
+  expect(testMessage(true, false)).toEqual(<h2>loading..</h2>);
+  expect(testMessage(false, 'error')).toEqual(<h2>error</h2>);
 });
 
 
 it('should return the initial state ', () => {
   expect(reducer(undefined, {})).toEqual({
     series: {
-      episodeList: [], error: null, isFetching: false, show: {}, shows: [],
+      episodeList: {}, error: null, isFetching: false, shows: {},
     },
   });
 });
@@ -45,6 +45,7 @@ it('should update show for type FETCH_SHOW_SUCCESS', () => {
     reducer({}, {
       type: FETCH_SHOW_SUCCESS,
       result: 'test',
-    }).series.show,
-  ).toEqual('test');
+      id: 1,
+    }).series.shows,
+  ).toEqual({ 1: { show: 'test' } });
 });
