@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Tile from './Tile';
 import { fetchShows } from '../stores/modules/series';
-import showMessage from './Helpers';
+import { showMessage } from './Helpers';
 import {
   Column, Row, Heading, Grid,
 } from '../styled';

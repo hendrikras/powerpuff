@@ -4,7 +4,7 @@ import ReactHtmlParser from 'react-html-parser';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import showMessage from './Helpers';
+import { showMessage, stubImage } from './Helpers';
 import { fetchEpisodes, fetchShow } from '../stores/modules/series';
 import Tile from './Tile';
 import {
@@ -64,8 +64,9 @@ class Details extends Component {
                 episodeList[idx] ? (
                   <Grid>
                     {episodeList[idx]
-                      .filter(item => item.image)
-                      .map(episode => (<Tile item={episode} showSummary key={episode.id} />))}
+                      .map(episode => (
+                        <Tile item={stubImage(episode)} showSummary key={episode.id} />
+                      ))}
                   </Grid>
                 ) : (<Button primary onClick={() => fetch(id)}>Show episodes</Button>)
               }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { StaticRouter } from 'react-router-dom';
-import testMessage from './views/Helpers';
+import { showMessage, stubImage } from './views/Helpers';
 import reducer from './stores/modules';
 import App from './App';
 import { FETCH_SHOW_BEGIN, FETCH_SHOW_SUCCESS } from './stores/modules/series';
@@ -17,9 +17,13 @@ it('renders without crashing', () => {
 });
 
 it('should return an error message ', () => {
-  expect(testMessage()).toEqual(false);
-  expect(testMessage(true, false)).toEqual(<h2>loading..</h2>);
-  expect(testMessage(false, 'error')).toEqual(<h2>error</h2>);
+  expect(showMessage()).toEqual(false);
+  expect(showMessage(true, false)).toEqual(<h2>loading..</h2>);
+  expect(showMessage(false, 'error')).toEqual(<h2>error</h2>);
+});
+
+it('should return an object with stubimage ', () => {
+  expect(stubImage({})).toEqual({ image: { medium: 'http://placehold.it/250x140' } });
 });
 
 
