@@ -64,6 +64,7 @@ class Details extends Component {
                 episodeList[idx] ? (
                   <Grid>
                     {episodeList[idx]
+                      .filter(item => item.image)
                       .map(episode => (<Tile item={episode} showSummary key={episode.id} />))}
                   </Grid>
                 ) : (<Button primary onClick={() => fetch(id)}>Show episodes</Button>)
@@ -73,7 +74,7 @@ class Details extends Component {
         </>
       );
     }
-    return <div>loading</div>;
+    return <div>loading..</div>;
   }
 }
 

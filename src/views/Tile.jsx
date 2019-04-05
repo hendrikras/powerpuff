@@ -10,12 +10,12 @@ const Tile = ({
   showSummary,
   onClick,
   item: {
-    name, summary, image,
+    name, summary, image: { medium },
   },
 }) => (
   <GridItem>
     <Button onClick={onClick}>
-      { image && image.medium && <Image alt="banner" src={image.medium} /> }
+      { medium && <Image alt="banner" src={medium} /> }
       <CardHeading>{ name }</CardHeading>
       { showSummary && <div>{ ReactHtmlParser(summary) }</div> }
     </Button>
