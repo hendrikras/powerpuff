@@ -15,9 +15,9 @@ const Tile = ({
 }) => (
   <GridItem>
     <Button onClick={onClick}>
-      { medium && <Image alt="banner" src={medium} /> }
+      <Image alt="banner" src={medium} />
       <CardHeading>{ name }</CardHeading>
-      { showSummary && <div>{ ReactHtmlParser(summary) }</div> }
+      { showSummary && ReactHtmlParser(summary)}
     </Button>
   </GridItem>
 );
