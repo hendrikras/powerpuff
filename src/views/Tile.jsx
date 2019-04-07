@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Button, CardHeading, GridItem, Image,
+  Button, CardHeading, Image,
 } from '../styled';
 
 const Tile = ({
@@ -13,13 +13,11 @@ const Tile = ({
     name, summary, image: { medium },
   },
 }) => (
-  <GridItem>
-    <Button onClick={onClick}>
-      <Image alt="banner" src={medium} />
-      <CardHeading>{ name }</CardHeading>
-      { showSummary && ReactHtmlParser(summary)}
-    </Button>
-  </GridItem>
+  <Button onClick={onClick}>
+    <Image alt="banner" src={medium} />
+    <CardHeading>{ name }</CardHeading>
+    { showSummary && ReactHtmlParser(summary)}
+  </Button>
 );
 
 Tile.defaultProps = {

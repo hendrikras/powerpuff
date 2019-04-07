@@ -15,6 +15,7 @@ font-family: 'Enriqueta', arial, serif;
 line-height: 1.25; margin: 0 0 10px;
 font-size: 40px;
 font-weight: bold;
+text-align: center;
 @media (min-width: 320px) and (max-width: 780px) {
   font-size: 30px;
 }
@@ -40,7 +41,7 @@ font-family: "Helvetica Neue",Arial,sans-serif;
 font-size: 16px;
 font-weight: 300;
 line-height: 1.5625;
-margin-bottom: 15px
+margin: 15px
 
  @media (min-width: 320px) and (max-width: 780px) {
  font-size: 13px;
@@ -55,24 +56,17 @@ export const Column = styled.div`
 `;
 
 export const Image = styled.img`
-  margin: 15px;
+  margin: 15px 0;
 `;
 
 export const Grid = styled.div`
-  display: grid;
-   grid-template-areas: "a";
-   grid-gap: 10px;
-   @media (min-width: 780px)  {
-    grid-template-areas: "a a a";
-  }
+ display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 15px;
 `;
 
 export const GridItem = styled.div`
-  grid-column-start: auto;
-  grid-column-end: auto;
-  
-  grid-row-start: auto
-  grid-row-end: auto
+
 `;
 
 export const Row = styled.div`
@@ -99,7 +93,7 @@ export const Row = styled.div`
 export const Button = styled.button`
   background: ${props => (props.primary ? 'palevioletred' : 'white')};
   color: ${props => (props.primary ? 'white' : 'palevioletred')};
-
+  text-align: left;
   font-size: 1em;
   padding: 0.25em 1em;
   border: 2px solid palevioletred;
@@ -110,5 +104,6 @@ export const Button = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: top;
+  outline: 0;
 }
 `;

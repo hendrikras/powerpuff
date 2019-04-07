@@ -58,9 +58,7 @@ class Details extends Component {
               </Paragraph>
             </Column>
           </Row>
-          <Row>
-            <Column>
-              {
+          {
                 episodeList[idx] ? (
                   <Grid>
                     {episodeList[idx]
@@ -68,10 +66,14 @@ class Details extends Component {
                         <Tile item={stubImage(episode)} showSummary key={episode.id} />
                       ))}
                   </Grid>
-                ) : (<Button primary onClick={() => fetch(id)}>Show episodes</Button>)
+                ) : (
+                  <Row>
+                    <Column>
+                      <Button primary onClick={() => fetch(id)}>Show episodes</Button>
+                    </Column>
+                  </Row>
+                )
               }
-            </Column>
-          </Row>
         </>
       );
     }

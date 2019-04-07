@@ -8,7 +8,7 @@ import Tile from './Tile';
 import { fetchShows } from '../stores/modules/series';
 import { showMessage } from './Helpers';
 import {
-  Column, Row, Heading, Grid,
+  Heading, Grid,
 } from '../styled';
 
 class Main extends Component {
@@ -25,8 +25,6 @@ class Main extends Component {
     return showMessage(isFetching, error) || (
       <>
         <Heading>Series</Heading>
-        <Row>
-          <Column>
             <Grid>
               {Object.values(shows).map(({ show }) => (
                 <Tile
@@ -36,8 +34,6 @@ class Main extends Component {
                 />
               ))}
             </Grid>
-          </Column>
-        </Row>
       </>
     );
   }
