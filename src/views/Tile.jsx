@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Button, CardHeading, Image,
+  Button, CardHeading, Image, GridItem,
 } from '../styled';
 
 const Tile = ({

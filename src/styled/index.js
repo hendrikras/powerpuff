@@ -56,18 +56,15 @@ export const Column = styled.div`
 `;
 
 export const Image = styled.img`
-  margin: 15px 0;
+  margin: 15px auto;
 `;
 
 export const Grid = styled.div`
  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
   grid-gap: 15px;
 `;
 
-export const GridItem = styled.div`
-
-`;
 
 export const Row = styled.div`
   display: flex;
@@ -95,7 +92,6 @@ export const Button = styled.button`
   color: ${props => (props.primary ? 'white' : 'palevioletred')};
   text-align: left;
   font-size: 1em;
-  padding: 0.25em 1em;
   border: 2px solid palevioletred;
   border-radius: 3px;
   width: 100%
@@ -103,7 +99,29 @@ export const Button = styled.button`
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  align-content: flex-end;
   justify-content: top;
   outline: 0;
 }
+`;
+
+export const Input = styled.input`
+-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font: 15px/1 'Open Sans', sans-serif;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  max-width: 500px;
+  background-color: #ddd;
+  border: none;
+  padding: 10px 11px 11px 11px;
+  border-radius: 3px;
+  box-shadow: none;
+  outline: none;
+  margin: 10px auto;
+  box-sizing: border-box;
+  width: 100%
 `;

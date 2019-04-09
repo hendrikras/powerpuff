@@ -5,26 +5,34 @@ export const FETCH_EPISODE_SUCCESS = 'FETCH_EPISODE_SUCCESS';
 export const FETCH_SHOWS_BEGIN = 'FETCH_SHOWS_BEGIN';
 export const FETCH_SHOWS_SUCCESS = 'FETCH_SHOWS_SUCCESS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
+export const SEARCH = 'SEARCH';
 
 export const fetchShowsFailure = error => ({
   type: FETCH_FAILURE,
   payload: { error },
 });
+export const setSearch = search => ({
+  type: SEARCH,
+  payload: { search },
+});
 
-const arrayToObject = array => array.reduce((serie, item) => {
-  serie[item.show.id] = item; //eslint-disable-line
-  return serie;
+const arrayToObject = array => array.reduce((accumulator, item) => {
+  accumulator[item.show.id] = item;
+  return accumulator;
 }, {});
 
 const initialState = {
   error: null,
+  search: 'girls',
   shows: {},
   episodeList: {},
   isFetching: false,
 };
 
 export default (state = initialState, action) => {
-  const { id, result, error } = action;
+  const {
+    id, result, error, payload: { search } = {},
+  } = action;
   switch (action.type) {
     case FETCH_SHOWS_BEGIN:
       return {
@@ -64,6 +72,11 @@ export default (state = initialState, action) => {
         episodeList: { [id]: result },
         isFetching: false,
       };
+    case SEARCH:
+      return {
+        ...state,
+        search,
+      };
 
     default:
       return state;
@@ -74,14 +87,13 @@ const throwError = (response) => {
   throw Error(response.statusText);
 };
 
-const getData = (type, id) => (dispatch) => {
+const getData = (id, query, type) => (dispatch) => {
   dispatch({
     type: FETCH_SHOW_BEGIN,
   });
   const base = 'http://api.tvmaze.com';
-  const search = id ? `shows/${id}` : '/search/shows?q=girls';
-  const url = `${base}/${search}`;
-  fetch(type === FETCH_EPISODE_SUCCESS ? url.concat('/episodes') : url)
+  const url = `${base}/${query}`;
+  fetch(url)
     .then(response => (response.ok ? response : throwError(response)))
     .then(response => response.json())
     .then((result) => {
@@ -94,10 +106,7 @@ const getData = (type, id) => (dispatch) => {
     .catch(error => dispatch(fetchShowsFailure(error)));
 };
 
-export const setShow = result => (dispatch) => {
-  dispatch({ type: FETCH_SHOW_SUCCESS, result });
-};
 
-export const fetchShows = () => getData(FETCH_SHOWS_SUCCESS);
-export const fetchShow = id => getData(FETCH_SHOW_SUCCESS, id);
-export const fetchEpisodes = id => getData(FETCH_EPISODE_SUCCESS, id);
+export const fetchShows = search => getData(search, `/search/shows?q=${search}`, FETCH_SHOWS_SUCCESS);
+export const fetchShow = id => getData(id, `shows/${id}`, FETCH_SHOW_SUCCESS);
+export const fetchEpisodes = id => getData(id, `shows/${id}/episodes`, FETCH_EPISODE_SUCCESS);

@@ -7,7 +7,7 @@ import { LinkElement } from './styled';
 const App = () => (
   <div>
     <header>
-      <LinkElement to="/">Series</LinkElement>
+      <LinkElement to="/">Home</LinkElement>
     </header>
 
     <main>

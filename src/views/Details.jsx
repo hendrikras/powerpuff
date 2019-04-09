@@ -63,7 +63,7 @@ class Details extends Component {
                   <Grid>
                     {episodeList[idx]
                       .map(episode => (
-                        <Tile item={stubImage(episode)} showSummary key={episode.id} />
+                        <Tile item={stubImage(episode, 250, 140)} showSummary key={episode.id} />
                       ))}
                   </Grid>
                 ) : (

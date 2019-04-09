@@ -5,35 +5,57 @@ import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Tile from './Tile';
-import { fetchShows } from '../stores/modules/series';
-import { showMessage } from './Helpers';
+import { fetchShows, setSearch } from '../stores/modules/series';
+import { showMessage, stubImage } from './Helpers';
 import {
-  Heading, Grid,
+  Heading, Grid, Row, Column, Input, Form
 } from '../styled';
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.textInput = React.createRef();
+  }
+
   componentDidMount() {
-    const { fetchShows: getShows } = this.props;
-    getShows();
+    const { fetchShows: getShows, search } = this.props;
+    getShows(search);
   }
 
   render() {
     const {
-      changePage, shows, error, isFetching,
+      changePage, shows, error, isFetching, setSearch: doSearch, search,
     } = this.props;
 
     return showMessage(isFetching, error) || (
       <>
-        <Heading>Series</Heading>
-            <Grid>
-              {Object.values(shows).map(({ show }) => (
-                <Tile
-                  key={show.id}
-                  item={show}
-                  onClick={() => changePage(show.id)}
-                />
-              ))}
-            </Grid>
+        <Heading>
+        Serie finder
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              const { fetchShows: getShows } = this.props;
+              const { current: { value = '' } } = this.textInput;
+              getShows(value);
+              doSearch(value);
+            }}
+          >
+            <Input
+              type="text"
+              placeholder={search}
+              ref={this.textInput}
+            />
+          </form>
+        </Heading>
+        <Grid>
+          {Object.values(shows).map(({ show }) => (
+            <Tile
+              key={show.id}
+              item={stubImage(show, 210, 295)}
+              onClick={() => changePage(show.id)}
+            />
+          ))}
+        </Grid>
       </>
     );
   }
@@ -41,9 +63,11 @@ class Main extends Component {
 
 Main.defaultProps = {
   error: null,
+  search: 'girls',
 };
 
 Main.propTypes = {
+  search: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.shape({
     body: PropTypes.object,
@@ -58,12 +82,14 @@ Main.propTypes = {
   }).isRequired,
   changePage: PropTypes.func.isRequired,
   fetchShows: PropTypes.func.isRequired,
+  setSearch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ series }) => series;
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchShows,
+  setSearch,
   changePage: id => push(`/details/${id}`),
 }, dispatch);
 
