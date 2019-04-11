@@ -29,8 +29,7 @@ font-size: 25px;
 font-weight: bold;
 @media (min-width: 320px) and (max-width: 780px) {
   font-size: 14px;
-  line-height: 1.25; margin: 0 0 0;
-
+  line-height: 1.25; 
 }
 `;
 

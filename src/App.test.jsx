@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { StaticRouter } from 'react-router-dom';
-import { showMessage, stubImage } from './views/Helpers';
+import { showMessage, stubImage, textTruncate } from './views/Helpers';
 import reducer from './stores/modules';
 import App from './App';
 import { FETCH_SHOW_BEGIN, FETCH_SHOW_SUCCESS } from './stores/modules/series';
@@ -22,15 +22,21 @@ it('should return an error message ', () => {
   expect(showMessage(false, 'error')).toEqual(<h2>error</h2>);
 });
 
-it('should return an object with stubimage ', () => {
-  expect(stubImage({})).toEqual({ image: { medium: 'http://placehold.it/250x140' } });
+it('should truncate text ', () => {
+
+  expect(textTruncate('bla')).toEqual('bla');
+  expect(textTruncate('123', 2, '!')).toEqual('1!');
 });
 
+
+it('should return an object with stubimage ', () => {
+  expect(stubImage({}, 250, 140)).toEqual({ image: { medium: 'http://placehold.it/250x140' } });
+});
 
 it('should return the initial state ', () => {
   expect(reducer(undefined, {})).toEqual({
     series: {
-      episodeList: {}, error: null, isFetching: false, shows: {},
+      episodeList: {}, error: null, isFetching: false, shows: {}, search: 'girls',
     },
   });
 });

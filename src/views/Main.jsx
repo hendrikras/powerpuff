@@ -8,7 +8,7 @@ import Tile from './Tile';
 import { fetchShows, setSearch } from '../stores/modules/series';
 import { showMessage, stubImage } from './Helpers';
 import {
-  Heading, Grid, Row, Column, Input, Form
+  Heading, Grid, Input,
 } from '../styled';
 
 class Main extends Component {

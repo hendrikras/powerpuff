@@ -3,11 +3,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Button, CardHeading, Image, GridItem,
+  Button, CardHeading, Image,
 } from '../styled';
+import { textTruncate } from './Helpers';
+
+
+const reducer = (accumulator, current) => accumulator + current;
+
+
+function transform(node) {
+  if (node.type === 'tag' && node.name === 'p') {
+    const filtered = node.children
+      .filter(el => el.type === 'text')
+      .map(item => item.data)
+      .reduce(reducer);
+    return textTruncate(filtered, 100, '...');
+  }
+  return <div />;
+}
 
 const Tile = ({
-  showSummary,
   onClick,
   item: {
     name, summary, image: { medium },
@@ -16,17 +31,15 @@ const Tile = ({
   <Button onClick={onClick}>
     <Image alt="banner" src={medium} />
     <CardHeading>{ name }</CardHeading>
-    { showSummary && ReactHtmlParser(summary)}
+    { ReactHtmlParser(summary, { transform })}
   </Button>
 );
 
 Tile.defaultProps = {
-  showSummary: false,
   onClick: () => null,
 };
 
 Tile.propTypes = {
-  showSummary: PropTypes.bool,
   onClick: PropTypes.func,
   item: PropTypes.shape({
     id: PropTypes.number,
