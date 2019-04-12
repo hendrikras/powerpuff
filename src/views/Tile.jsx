@@ -7,16 +7,14 @@ import {
 } from '../styled';
 import { textTruncate } from './Helpers';
 
-
 const reducer = (accumulator, current) => accumulator + current;
-
 
 function transform(node) {
   if (node.type === 'tag' && node.name === 'p') {
     const filtered = node.children
       .filter(el => el.type === 'text')
       .map(item => item.data)
-      .reduce(reducer);
+      .reduce(reducer, '');
     return textTruncate(filtered, 100, '...');
   }
   return <div />;

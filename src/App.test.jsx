@@ -22,9 +22,8 @@ it('should return an error message ', () => {
   expect(showMessage(false, 'error')).toEqual(<h2>error</h2>);
 });
 
-it('should truncate text ', () => {
-
-  expect(textTruncate('bla')).toEqual('bla');
+it('should truncate text', () => {
+  expect(textTruncate('bla', 100, '')).toEqual('bla');
   expect(textTruncate('123', 2, '!')).toEqual('1!');
 });
 

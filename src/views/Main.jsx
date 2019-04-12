@@ -63,11 +63,10 @@ class Main extends Component {
 
 Main.defaultProps = {
   error: null,
-  search: 'girls',
 };
 
 Main.propTypes = {
-  search: PropTypes.string,
+  search: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.shape({
     body: PropTypes.object,
