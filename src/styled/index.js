@@ -124,3 +124,70 @@ export const Input = styled.input`
   box-sizing: border-box;
   width: 100%
 `;
+
+
+export const StyledModal = styled.div`
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+
+  .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .modal-container {
+    width: 80%;
+    margin: 0px auto; 
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all 0.3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .modal-header h3 {
+    color: grey;
+  }
+
+  .modal-body {
+    width: 100%;
+    margin: 10px;
+  }
+
+  &.modal-enter {
+    opacity: 0;
+  }
+
+  &.modal-exit {
+    opacity: 0;
+  }
+
+  .modal-footer {
+    width: 100%;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    background: white;
+    box-shadow: 0 -3px 6px 0 rgba(18, 19, 18, 0.09);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &.modal-enter .modal-container,
+  &.modal-exit .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+`;

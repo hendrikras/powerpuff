@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactHtmlParser from 'react-html-parser';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -8,10 +7,17 @@ import { showMessage, stubImage } from './Helpers';
 import { fetchEpisodes, fetchShow } from '../stores/modules/series';
 import Tile from './Tile';
 import {
-  Button, Grid, Image, Row, Column, Heading, Paragraph,
+  Button, Grid, Row, Column,
 } from '../styled';
+import Modal from '../containers/Modal';
+import Summary from './Summary';
 
 class Details extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { episode: null, showModal: false };
+  }
+
   componentDidMount() {
     const {
       fetchShow: getShow,
@@ -24,6 +30,7 @@ class Details extends Component {
   }
 
   render() {
+    const { episode, showModal } = this.state;
     const {
       isFetching,
       error,
@@ -34,42 +41,36 @@ class Details extends Component {
     } = this.props;
     const { params: { id: idx } } = match;
     if (shows[idx]) {
-      const {
-        id,
-        name,
-        summary = 'pending',
-        image: {
-          medium = 'http://placehold.it/210x295',
-        } = {},
-      } = shows[idx].show;
+      const { show } = shows[idx];
 
       return showMessage(isFetching, error) || (
         <>
-          <Row>
-            <Column>
-              <Image alt="cover" src={medium} />
-            </Column>
-            <Column>
-              <Heading>
-                {name}
-              </Heading>
-              <Paragraph>
-                {ReactHtmlParser(summary)}
-              </Paragraph>
-            </Column>
-          </Row>
+          <Modal
+            visible={showModal}
+            onCancel={() => this.setState({ showModal: false })}
+          >
+            <h3 slot="header">{ episode && episode.name }</h3>
+            <div slot="body">
+              <Summary item={episode} />
+            </div>
+          </Modal>
+          <Summary item={show} />
           {
                 episodeList[idx] ? (
                   <Grid>
                     {episodeList[idx]
-                      .map(episode => (
-                        <Tile item={stubImage(episode, 250, 140)} showSummary key={episode.id} />
+                      .map(item => (
+                        <Tile
+                          item={stubImage(item, 250, 140)}
+                          key={item.id}
+                          onClick={() => this.setState({ episode: item, showModal: true })}
+                        />
                       ))}
                   </Grid>
                 ) : (
                   <Row>
                     <Column>
-                      <Button primary onClick={() => fetch(id)}>Show episodes</Button>
+                      <Button primary onClick={() => fetch(show.id)}>Show episodes</Button>
                     </Column>
                   </Row>
                 )
