@@ -44,3 +44,4 @@ Summary.defaultProps = {
 };
 
 export default Summary;
+                
