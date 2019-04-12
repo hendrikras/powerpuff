@@ -3,7 +3,7 @@ import ReactHtmlParser from 'react-html-parser';
 import PropTypes from 'prop-types';
 import {
   Column, Image, Paragraph, Row,
-} from '../styled';
+} from '../styled/index';
 
 const Summary = ({
   item: {
@@ -44,4 +44,3 @@ Summary.defaultProps = {
 };
 
 export default Summary;
-                

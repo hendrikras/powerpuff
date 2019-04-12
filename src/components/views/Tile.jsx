@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import {
   Button, CardHeading, Image,
-} from '../styled';
-import { textTruncate } from './Helpers';
+} from '../styled/index';
+import { textTruncate } from '../../Helpers';
 
 const reducer = (accumulator, current) => accumulator + current;
 

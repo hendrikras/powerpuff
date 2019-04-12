@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Tile from './Tile';
-import { fetchShows, setSearch } from '../stores/modules/series';
-import { showMessage, stubImage } from './Helpers';
+import Tile from '../views/Tile';
+import { fetchShows, setSearch } from '../../stores/modules/series';
+import { showMessage, stubImage } from '../../Helpers';
 import {
   Heading, Grid, Input,
-} from '../styled';
+} from '../styled/index';
+import { Button } from '../styled';
 
 class Main extends Component {
   constructor(props) {
@@ -24,21 +25,22 @@ class Main extends Component {
 
   render() {
     const {
-      changePage, shows, error, isFetching, setSearch: doSearch, search,
+      changePage, shows, error, isFetching, setSearch: doSearch, search, fetchShows: getShows,
     } = this.props;
+
+    const submit = (event) => {
+      event.preventDefault();
+      const { current: { value = '' } } = this.textInput;
+      getShows(value);
+      doSearch(value);
+    };
 
     return showMessage(isFetching, error) || (
       <>
         <Heading>
         Serie finder
           <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              const { fetchShows: getShows } = this.props;
-              const { current: { value = '' } } = this.textInput;
-              getShows(value);
-              doSearch(value);
-            }}
+            onSubmit={submit}
           >
             <Input
               type="text"

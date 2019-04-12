@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { showMessage, stubImage } from './Helpers';
-import { fetchEpisodes, fetchShow } from '../stores/modules/series';
-import Tile from './Tile';
+import { showMessage, stubImage } from '../../Helpers';
+import { fetchEpisodes, fetchShow } from '../../stores/modules/series';
+import Tile from '../views/Tile';
 import {
   Button, Grid, Row, Column,
-} from '../styled';
-import Modal from '../containers/Modal';
-import Summary from './Summary';
+} from '../styled/index';
+import Modal from './Modal';
+import Summary from '../views/Summary';
 
 class Details extends Component {
   constructor(props) {

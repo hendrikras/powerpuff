@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
-import { Button, StyledModal } from '../styled';
+import { Button, StyledModal } from '../styled/index';
 
 const Slot = ({ children, slot, defaultSlot }) => {
   let slottedChild = null;
@@ -26,6 +26,7 @@ export default class Modal extends PureComponent {
     const defaultFooter = (
       <>
         <Button
+          small
           primary
           onClick={onCancel}
         >

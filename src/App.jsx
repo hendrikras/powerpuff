@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Main from './views/Main';
-import Details from './views/Details';
-import { LinkElement } from './styled';
+import Main from './components/containers/Main';
+import Details from './components/containers/Details';
+import { LinkElement } from './components/styled';
 
 const App = () => (
   <div>

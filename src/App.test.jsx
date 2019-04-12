@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { StaticRouter } from 'react-router-dom';
-import { showMessage, stubImage, textTruncate } from './views/Helpers';
+import { showMessage, stubImage, textTruncate } from './Helpers';
 import reducer from './stores/modules';
 import App from './App';
 import { FETCH_SHOW_BEGIN, FETCH_SHOW_SUCCESS } from './stores/modules/series';
