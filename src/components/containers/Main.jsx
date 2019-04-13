@@ -10,7 +10,6 @@ import { showMessage, stubImage } from '../../Helpers';
 import {
   Heading, Grid, Input,
 } from '../styled/index';
-import { Button } from '../styled';
 
 class Main extends Component {
   constructor(props) {

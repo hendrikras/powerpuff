@@ -35,11 +35,10 @@ class Details extends Component {
       isFetching,
       error,
       shows,
-      match,
+      match: { params: { id: idx } },
       episodeList = {},
       fetchEpisodes: fetch,
     } = this.props;
-    const { params: { id: idx } } = match;
     if (shows[idx]) {
       const { show } = shows[idx];
 

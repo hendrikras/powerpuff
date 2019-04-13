@@ -10,12 +10,11 @@ import { textTruncate } from '../../Helpers';
 const reducer = (accumulator, current) => accumulator + current;
 
 function transform(node) {
-  if (node.type === 'tag' && node.name === 'p') {
-    const filtered = node.children
-      .filter(el => el.type === 'text')
-      .map(item => item.data)
+  if (!node.prev) {
+    const innerElements = node.children && node.children
+      .map(({ children = [], data }) => (children.length > 0 ? children[0].data : data))
       .reduce(reducer, '');
-    return textTruncate(filtered, 100, '...');
+    return textTruncate(innerElements, 100, '...');
   }
   return null;
 }
