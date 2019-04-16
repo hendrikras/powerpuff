@@ -60,7 +60,9 @@ class Details extends Component {
                     {episodeList[idx]
                       .map(item => (
                         <Tile
-                          item={stubImage(item, 250, 140)}
+                          item={item}
+                          width={250}
+                          height={140}
                           key={item.id}
                           onClick={() => this.setState({ episode: item, showModal: true })}
                         />

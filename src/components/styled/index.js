@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+const PRIMARY_COLOR = '#db7093';
+
 export const LinkElement = styled(Link)`
-  background-color: palevioletred;
+  background-color: ${PRIMARY_COLOR};
   border: 1px solid #93291b;
   border-radius: 3px 3px 3px 3px;
   box-shadow: 0 0 1px #93291b inset;
@@ -87,11 +89,11 @@ export const Row = styled.div`
 `;
 
 export const Button = styled.button`
-  background: ${({ primary }) => (primary ? 'palevioletred' : '#fff')};
-  color: ${({ primary }) => (primary ? '#fff' : 'palevioletred')};
+  background: ${({ primary }) => (primary ? PRIMARY_COLOR : '#fff')};
+  color: ${({ primary }) => (primary ? '#fff' : PRIMARY_COLOR)};
   text-align: left;
   font-size: 1em;
-  border: 2px solid palevioletred;
+  border: 2px solid ${PRIMARY_COLOR};
   border-radius: 3px;
   height: 100%;
   cursor: pointer;
@@ -189,4 +191,20 @@ export const StyledModal = styled.div`
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
+`;
+
+export const Spacer = styled.div`
+  margin: 15px auto;
+  background-color: ${PRIMARY_COLOR};
+  height: ${({ height }) => height}px;
+  width: ${({ width }) => width}px;
+  color: #fff;
+  position: relative;
+`;
+
+export const Title = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

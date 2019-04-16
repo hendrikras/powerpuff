@@ -52,7 +52,9 @@ class Main extends Component {
           {Object.values(shows).map(({ show }) => (
             <Tile
               key={show.id}
-              item={stubImage(show, 210, 295)}
+              item={show}
+              height={295}
+              width={210}
               onClick={() => changePage(show.id)}
             />
           ))}

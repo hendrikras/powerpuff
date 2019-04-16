@@ -3,9 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Button, CardHeading, Image,
-} from '../styled/index';
+  Button, CardHeading,
+} from '../styled';
 import { textTruncate } from '../../Helpers';
+import Cover from './Cover';
 
 const reducer = (accumulator, current) => accumulator + current;
 
@@ -21,14 +22,22 @@ function transform(node) {
 
 const Tile = ({
   onClick,
+  height,
+  width,
   item: {
-    name, summary, image: { medium },
+    name, summary, image,
   },
 }) => (
   <Button onClick={onClick}>
-    <Image alt="banner" src={medium} />
+    <Cover image={image} height={height} width={width}>
+      {name}
+    </Cover>
     <CardHeading>{ name }</CardHeading>
-    { ReactHtmlParser(summary, { transform })}
+    { ReactHtmlParser(
+      !summary || summary === ''
+        ? `No information is currently available for ${name}`
+        : summary, { transform },
+    )}
   </Button>
 );
 
@@ -37,6 +46,8 @@ Tile.defaultProps = {
 };
 
 Tile.propTypes = {
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
   onClick: PropTypes.func,
   item: PropTypes.shape({
     id: PropTypes.number,

@@ -2,18 +2,21 @@ import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import PropTypes from 'prop-types';
 import {
-  Column, Image, Paragraph, Row,
+  Column, Paragraph, Row,
 } from '../styled/index';
+import Cover from './Cover';
 
 const Summary = ({
   item: {
-    summary = '', image: { medium },
+    summary = '', image, name,
   },
 }) => (
   <>
     <Row>
       <Column>
-        <Image src={medium} />
+        <Cover image={image} width={210} height={295}>
+          { name }
+        </Cover>
       </Column>
       <Column>
         <Paragraph>
