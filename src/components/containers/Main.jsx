@@ -18,21 +18,29 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    const { fetchShows: getShows, search, setSearch: doSearch, searchQuery, match: { params: { query = '' } } } = this.props;
+    const {
+      fetchShows: getShows, search, setSearch: doSearch, searchQuery, match: { params: { query = '' } },
+    } = this.props;
     if (query) {
       getShows(query);
       doSearch(query);
     } else if (search) {
       searchQuery(search);
-    }
-    else {
+    } else {
       this.textInput.current.focus();
     }
   }
 
   render() {
     const {
-      changePage, shows, error, isFetching, setSearch: doSearch, search, fetchShows: getShows, searchQuery,
+      changePage,
+      shows,
+      error,
+      isFetching,
+      setSearch: doSearch,
+      search,
+      fetchShows: getShows,
+      searchQuery,
     } = this.props;
 
     const submit = (event) => {
@@ -46,7 +54,7 @@ class Main extends Component {
     return showMessage(isFetching, error) || (
       <>
         <Heading>
-        Serie finder
+          Serie finder
           <form
             onSubmit={submit}
           >
@@ -58,15 +66,16 @@ class Main extends Component {
           </form>
         </Heading>
         <Grid>
-          {Object.values(shows).map(({ show }) => (
-            <Tile
-              key={show.id}
-              item={show}
-              height={295}
-              width={210}
-              onClick={() => changePage(show.id)}
-            />
-          ))}
+          {Object.values(shows)
+            .map(({ show }) => (
+              <Tile
+                key={show.id}
+                item={show}
+                height={295}
+                width={210}
+                onClick={() => changePage(show.id)}
+              />
+            ))}
         </Grid>
       </>
     );
@@ -81,6 +90,7 @@ Main.defaultProps = {
 Main.propTypes = {
   search: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
+  match: PropTypes.shape().isRequired,
   error: PropTypes.shape({
     body: PropTypes.object,
   }),
@@ -92,6 +102,7 @@ Main.propTypes = {
       image: PropTypes.shape({ medium: PropTypes.string }),
     }),
   }).isRequired,
+  searchQuery: PropTypes.func.isRequired,
   changePage: PropTypes.func.isRequired,
   fetchShows: PropTypes.func.isRequired,
   setSearch: PropTypes.func.isRequired,
