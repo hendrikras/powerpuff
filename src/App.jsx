@@ -13,6 +13,7 @@ const App = () => (
     <main>
       <Route exact path="/" component={Main} />
       <Route path="/details/:id" component={Details} />
+      <Route path="/search/:query" component={Main} />
     </main>
   </div>
 );

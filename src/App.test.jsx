@@ -41,7 +41,7 @@ it('should return the initial state ', () => {
         error: null,
         isFetching: false,
         shows: {},
-        search: 'girls',
+        search: '',
       },
     });
 });

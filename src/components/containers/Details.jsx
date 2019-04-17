@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { showMessage, stubImage } from '../../Helpers';
+import { showMessage } from '../../Helpers';
 import { fetchEpisodes, fetchShow } from '../../stores/modules/series';
 import Tile from '../views/Tile';
 import {
@@ -99,7 +99,7 @@ Details.propTypes = {
       id: PropTypes.string,
       name: PropTypes.string,
       summary: PropTypes.string,
-      image: PropTypes.object,
+      image: PropTypes.shape({ medium: PropTypes.string }),
     }),
   }).isRequired,
   episodeList: PropTypes.shape({
@@ -107,7 +107,7 @@ Details.propTypes = {
       PropTypes.shape({
         id: PropTypes.number,
         name: PropTypes.string,
-        image: PropTypes.object,
+        image: PropTypes.shape({ medium: PropTypes.string }),
       }),
     ),
   }).isRequired,

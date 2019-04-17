@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Tile from '../views/Tile';
 import { fetchShows, setSearch } from '../../stores/modules/series';
-import { showMessage, stubImage } from '../../Helpers';
+import { showMessage } from '../../Helpers';
 import {
   Heading, Grid, Input,
 } from '../styled/index';
@@ -18,13 +18,21 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    const { fetchShows: getShows, search } = this.props;
-    getShows(search);
+    const { fetchShows: getShows, search, setSearch: doSearch, searchQuery, match: { params: { query = '' } } } = this.props;
+    if (query) {
+      getShows(query);
+      doSearch(query);
+    } else if (search) {
+      searchQuery(search);
+    }
+    else {
+      this.textInput.current.focus();
+    }
   }
 
   render() {
     const {
-      changePage, shows, error, isFetching, setSearch: doSearch, search, fetchShows: getShows,
+      changePage, shows, error, isFetching, setSearch: doSearch, search, fetchShows: getShows, searchQuery,
     } = this.props;
 
     const submit = (event) => {
@@ -32,6 +40,7 @@ class Main extends Component {
       const { current: { value = '' } } = this.textInput;
       getShows(value);
       doSearch(value);
+      searchQuery(value);
     };
 
     return showMessage(isFetching, error) || (
@@ -66,10 +75,11 @@ class Main extends Component {
 
 Main.defaultProps = {
   error: null,
+  search: null,
 };
 
 Main.propTypes = {
-  search: PropTypes.string.isRequired,
+  search: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.shape({
     body: PropTypes.object,
@@ -79,7 +89,7 @@ Main.propTypes = {
       id: PropTypes.string,
       name: PropTypes.string,
       summary: PropTypes.string,
-      image: PropTypes.object,
+      image: PropTypes.shape({ medium: PropTypes.string }),
     }),
   }).isRequired,
   changePage: PropTypes.func.isRequired,
@@ -93,6 +103,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchShows,
   setSearch,
   changePage: id => push(`/details/${id}`),
+  searchQuery: query => push(`/search/${query}`),
 }, dispatch);
 
 export default connect(

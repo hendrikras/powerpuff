@@ -23,7 +23,7 @@ const arrayToObject = array => array.reduce((accumulator, item) => {
 
 const initialState = {
   error: null,
-  search: 'girls',
+  search: '',
   shows: {},
   episodeList: {},
   isFetching: false,

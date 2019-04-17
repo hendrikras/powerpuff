@@ -24,5 +24,5 @@ Cover.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   children: PropTypes.node,
-  image: PropTypes.shape(),
+  image: PropTypes.shape({ medium: PropTypes.string }),
 };

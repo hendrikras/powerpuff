@@ -8,10 +8,43 @@ import Cover from './Cover';
 
 const Summary = ({
   item: {
-    summary = '', image, name,
+    summary = '',
+    image,
+    name,
+    premiered,
+    airdate,
+    runtime,
+    season,
+    type,
+    airtime,
   },
 }) => (
   <>
+    <Row>
+      <Column>
+        <Paragraph>
+          <b>First aired: </b>
+          {premiered || airdate}
+        </Paragraph>
+      </Column>
+      <Column>
+        <Paragraph>
+          <b>
+            {season ? 'Time: ' : 'Type: '}
+          </b>
+          {airtime || type}
+        </Paragraph>
+      </Column>
+      <Column>
+        <Paragraph>
+          <b>
+            {season ? 'Season: ' : 'Runtime: '}
+          </b>
+          {season || runtime}
+        </Paragraph>
+      </Column>
+    </Row>
+
     <Row>
       <Column>
         <Cover image={image} width={210} height={295}>
@@ -19,9 +52,11 @@ const Summary = ({
         </Cover>
       </Column>
       <Column>
-        <Paragraph>
-          {ReactHtmlParser(summary)}
-        </Paragraph>
+        <Column>
+          <Paragraph>
+            {ReactHtmlParser(summary)}
+          </Paragraph>
+        </Column>
       </Column>
     </Row>
   </>

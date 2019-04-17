@@ -37,6 +37,8 @@ export const CardHeading = styled.h2`
 
 
 export const Paragraph = styled.span`
+  position: relative;
+  top: -20px;
   color: #333333;
   font-family: "Helvetica Neue",Arial,sans-serif;
   font-size: 16px;
