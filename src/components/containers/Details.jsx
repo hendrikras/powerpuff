@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { goBack } from 'connected-react-router';
 import { showMessage } from '../../Helpers';
 import { fetchEpisodes, fetchShow } from '../../stores/modules/series';
 import Tile from '../views/Tile';
@@ -38,6 +39,7 @@ class Details extends Component {
       match: { params: { id: idx } },
       episodeList = {},
       fetchEpisodes: fetch,
+      prev: previous,
     } = this.props;
     if (shows[idx]) {
       const { show } = shows[idx];
@@ -72,6 +74,9 @@ class Details extends Component {
                   <Row>
                     <Column>
                       <Button primary onClick={() => fetch(show.id)}>Show episodes</Button>
+                    </Column>
+                    <Column>
+                      <Button onClick={previous}>Back</Button>
                     </Column>
                   </Row>
                 )
@@ -112,6 +117,7 @@ Details.propTypes = {
     ),
   }).isRequired,
   fetchEpisodes: PropTypes.func.isRequired,
+  prev: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ series }) => series;
@@ -119,6 +125,7 @@ const mapStateToProps = ({ series }) => series;
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchShow,
   fetchEpisodes,
+  prev: () => goBack(),
 }, dispatch);
 
 export default connect(

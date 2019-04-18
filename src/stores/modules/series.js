@@ -5,15 +5,10 @@ export const FETCH_EPISODE_SUCCESS = 'FETCH_EPISODE_SUCCESS';
 export const FETCH_SHOWS_BEGIN = 'FETCH_SHOWS_BEGIN';
 export const FETCH_SHOWS_SUCCESS = 'FETCH_SHOWS_SUCCESS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
-export const SEARCH = 'SEARCH';
 
 export const fetchShowsFailure = error => ({
   type: FETCH_FAILURE,
   payload: { error },
-});
-export const setSearch = search => ({
-  type: SEARCH,
-  payload: { search },
 });
 
 const arrayToObject = array => array.reduce((accumulator, item) => {
@@ -31,7 +26,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const {
-    id, result, error, payload: { search } = {},
+    id, result, error,
   } = action;
   switch (action.type) {
     case FETCH_SHOWS_BEGIN:
@@ -71,11 +66,6 @@ export default (state = initialState, action) => {
         ...state,
         episodeList: { [id]: result },
         isFetching: false,
-      };
-    case SEARCH:
-      return {
-        ...state,
-        search,
       };
 
     default:
