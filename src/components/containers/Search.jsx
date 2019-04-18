@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Tile from '../views/Tile';
 import SearchBar from '../views/SearchBar';
-import { fetchShows, setSearch } from '../../stores/modules/series';
+import { fetchShows } from '../../stores/modules/series';
 import { showMessage } from '../../Helpers';
 
 import {

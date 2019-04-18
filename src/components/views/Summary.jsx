@@ -11,55 +11,22 @@ const Summary = ({
     summary = '',
     image,
     name,
-    premiered,
-    airdate,
-    runtime,
-    season,
-    type,
-    airtime,
   },
 }) => (
-  <>
-    <Row>
+  <Row>
+    <Column>
+      <Cover image={image} width={210} height={295}>
+        { name }
+      </Cover>
+    </Column>
+    <Column>
       <Column>
         <Paragraph>
-          <b>First aired: </b>
-          {premiered || airdate}
+          {ReactHtmlParser(summary)}
         </Paragraph>
       </Column>
-      <Column>
-        <Paragraph>
-          <b>
-            {season ? 'Time: ' : 'Type: '}
-          </b>
-          {airtime || type}
-        </Paragraph>
-      </Column>
-      <Column>
-        <Paragraph>
-          <b>
-            {season ? 'Season: ' : 'Runtime: '}
-          </b>
-          {season || runtime}
-        </Paragraph>
-      </Column>
-    </Row>
-
-    <Row>
-      <Column>
-        <Cover image={image} width={210} height={295}>
-          { name }
-        </Cover>
-      </Column>
-      <Column>
-        <Column>
-          <Paragraph>
-            {ReactHtmlParser(summary)}
-          </Paragraph>
-        </Column>
-      </Column>
-    </Row>
-  </>
+    </Column>
+  </Row>
 );
 
 Summary.propTypes = {

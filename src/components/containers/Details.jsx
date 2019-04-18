@@ -12,6 +12,8 @@ import {
 } from '../styled/index';
 import Modal from './Modal';
 import Summary from '../views/Summary';
+import ShowDetails from '../views/ShowDetails';
+import EpisodeDetails from '../views/EpisodeDetails';
 
 class Details extends Component {
   constructor(props) {
@@ -52,10 +54,10 @@ class Details extends Component {
           >
             <h3 slot="header">{ episode && episode.name }</h3>
             <div slot="body">
-              <Summary item={episode} />
+              <EpisodeDetails item={episode} />
             </div>
           </Modal>
-          <Summary item={show} />
+          <ShowDetails item={show} />
           {
                 episodeList[idx] ? (
                   <Grid>
