@@ -1,3 +1,5 @@
+import { arrayToObject } from '../../Helpers';
+
 export const FETCH_SHOW_BEGIN = 'FETCH_SHOW_BEGIN';
 export const FETCH_SHOW_SUCCESS = 'FETCH_SHOW_SUCCESS';
 export const FETCH_EPISODE_SUCCESS = 'FETCH_EPISODE_SUCCESS';
@@ -10,11 +12,6 @@ export const fetchShowsFailure = error => ({
   type: FETCH_FAILURE,
   payload: { error },
 });
-
-const arrayToObject = array => array.reduce((accumulator, item) => {
-  accumulator[item.show.id] = item;
-  return accumulator;
-}, {});
 
 const initialState = {
   error: null,
@@ -64,7 +61,7 @@ export default (state = initialState, action) => {
     case FETCH_EPISODE_SUCCESS:
       return {
         ...state,
-        episodeList: { [id]: result },
+        episodeList: { [id]: result, ...state.episodeList },
         isFetching: false,
       };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { StaticRouter } from 'react-router-dom';
-import { showMessage, textTruncate } from './Helpers';
+import { showMessage, textTruncate, arrayToObject } from './Helpers';
 import reducer from './stores/modules';
 import App from './App';
 import { FETCH_SHOW_BEGIN, FETCH_SHOW_SUCCESS } from './stores/modules/series';
@@ -14,6 +14,13 @@ it('renders without crashing', () => {
     </StaticRouter>, div,
   );
   ReactDOM.unmountComponentAtNode(div);
+});
+
+it('should have correct structure ', () => {
+  expect(arrayToObject([{
+    show: { id: 0, bla: 'test' },
+  }]))
+    .toEqual({ 0: { show: { bla: 'test', id: 0 } } });
 });
 
 it('should return an error message ', () => {

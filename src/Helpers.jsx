@@ -13,3 +13,8 @@ export const textTruncate = (text, length, ending) => (
     ? text.substring(0, length - ending.length) + ending
     : text
 );
+
+export const arrayToObject = array => array.reduce((accumulator, item) => {
+  accumulator[item.show.id] = item;
+  return accumulator;
+}, {});

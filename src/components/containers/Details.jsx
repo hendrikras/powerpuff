@@ -11,7 +11,6 @@ import {
   Button, Grid, Row, Column,
 } from '../styled/index';
 import Modal from './Modal';
-import Summary from '../views/Summary';
 import ShowDetails from '../views/ShowDetails';
 import EpisodeDetails from '../views/EpisodeDetails';
 
